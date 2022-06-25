@@ -51,7 +51,7 @@ if($textmessage == '/start'){
           
 جهت نیم بها کردن لینک فایل موردنظر خود را ارسال کنید:",
 	 ]);
-}elseif(filter_var($textmessage)){
+}elseif($textmessage){
     
     $data = json_decode(file_get_contents('https://www.omdbapi.com/?i='.$textmessage.'&apikey=5a76e7e5'),true);
     if(isset($data['file'])){

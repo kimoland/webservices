@@ -55,38 +55,36 @@ if($textmessage == '/start'){
     
     $data = json_decode(file_get_contents('https://www.omdbapi.com/?i='.$textmessage.'&apikey=5a76e7e5'),true);
         $Title = $data['Title'];
-        $Year = $data['Year'];
-        $Rated = $data['Rated'];
-        $Genre = $data['Genre'];
-        $Runtime = $data['Runtime'];
-        $Poster = $data['Poster'];
-        $Plot = $data['Plot'];
-        $Country = $data['Country'];
-        $Language = $data['Language'];
-        $imdbRating = $data['imdbRating'];
-        $Metascore = $data['Language'];
-        bot('SendPhoto',[
-         'chat_id'=>$chat_id,
-         'photo'=>$Poster,
-         'caption'=>"₳ $Title $Year
+$Year = $data['Year'];
+$Rated = $data['Rated'];
+$Genre = $data['Genre'];
+$Runtime = $data['Runtime'];
+$Poster = $data['Poster'];
+$Plot = $data['Plot'];
+$Country = $data['Country'];
+$Language = $data['Language'];
+$imdbRating = $data['imdbRating'];
+$Metascore = $data['Metascore'];
+bot('SendPhoto',[
+'chat_id'=>$chat_id,
+'photo'=>$Poster,
+'caption'=>"₳ $Title $Year
 
-         ⚡️$imdbRating | ✅$Metascore
+⚡️$imdbRating | ✅$Metascore
 
-         ▷ $Rated
-         ۞ $Genre
+▷ $Rated
+۞ $Genre
          
-         ∰ $Plot
+∰ $Plot
          
-         ※ کشور : $Country
-         ₯ زبان : اصلی + دوبله فارسی بدون سانسور
-         🔥حجم مصرفی لینک ها نیم بها میباشد.
-         
-         ◆ #Movie
-         ◈ @King_Movie7",
-          'reply_markup'=> json_encode([
-             'inline_keyboard'=>[
+※ $Country
+
+◆ #Movie
+◈ @King_Movie7",
+'reply_markup'=> json_encode([
+'inline_keyboard'=>[
 [['text'=>"$Runtime",'callback_data'=>'is_join']],
 [['text'=>"$Language",'callback_data'=>'is_join']]
 ]])
-	 ]);
-    }
+]);
+}

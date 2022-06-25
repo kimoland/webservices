@@ -1,29 +1,35 @@
 <?php
+/*
+Proxy Api
 
+Channel : @GlypeX
+*/
 header('Content-type: application/json;');
-function getProxies($channel)
+function getProxy($channel,$limit)
 {
-    $get = file_get_contents('https://t.me/s/' . $channel);
-    preg_match_all('#href="(.*?)" target="_blank" rel="noopener"#', $get, $prxs);
-    preg_match_all('#class="tgme_widget_message_inline_button url_button" href="(.*?)"#', $get, $in_prxs);
-    return $in_prxs[1] ?: $prxs[1];
-}
-function ExProxy($proxy)
-{
-    preg_match('#server=(.*?)&port=(.*?)&secret=(.*)#', $proxy, $info);
-    return ['link' => $proxy, 'server' => $info[1], 'port' => $info[2], 'secret' => $info[3]];
-}
-if (!is_null($_GET['GlypeX'])) {
-    $prxs = getProxies($_GET['GlypeX']);
-    if (!is_null($prxs)) {
-        for ($p = count($prxs) - 1; $p >= 0; $p--) {
-            $prxlist[] = ExProxy(html_entity_decode($prxs[$p]));
+   
+ $get = file_get_contents('https://t.me/GlypeX/' . $channel); //channel id proxy
+
+    preg_match_all('#<a href="(.*?)" target="_blank" rel="noopener">#', $get, $proxies);
+    for ($p = $limit - 1; 0 <= $p; $p--) {
+        if (strpos($proxies[1][$p], 'https://t.me/proxy?server=') !== false or strpos($proxies[1][$p], 'tg://proxy?server=') !== false) {
+            $proxs[] = $proxies[1][$p];
         }
-        $poker = ['ok' => true, 'channel' => '@GlypeX', 'proxies' => $prxlist];
+    }
+    return $proxs;
+}
+if (!empty($_GET['channel']) && !empty($_GET['limit'])) {
+    if ($_GET['limit'] <= 20) {
+        $proxies = getProxy($_GET['channel'], $_GET['limit']);
+        if (!is_null($proxies)) {
+            $show = ['ok' => true, 'channel' => '@GlypeX', 'results' => $proxies];
+        } else {
+            $show = ['ok' => false, 'channel' => '@GlypeX', 'message' => 'Something went wronge!!'];
+        }
     } else {
-        $poker = ['ok' => false, 'channel' => '@GlypeX', 'message' => 'There is not any proxy in @' . $_GET['GlypeX']];
+        $show = ['ok' => false, 'channel' => '@GlypeX', 'message' => 'It is overload'];
     }
 } else {
-    $poker = ['ok' => false, 'channel' => '@GlypeX', 'message' => 'I need channel param :|'];
+    $show = ['ok' => false, 'channel' => '@GlypeX', 'message' => 'I need channel and limit!!'];
 }
-echo json_encode($poker, 128);
+echo json_encode($show, 128);

@@ -1,3 +1,43 @@
+<?php
+
+define('API_KEY', '1491491242:AAHX1Yj0f6hsI8fTDD_wg2DbAh355DGqPo4');
+$token = API_KEY;
+$userbot = "KingProxy7Bot";
+$channels = "King_Network7";
+$logchchannel = "@KingProxyLog";
+$admin = 710732845;
+$server_free_1 = file_get_contents("https://kingproxy.de/p2-main/api/server1.php");
+$server_free_2 = file_get_contents("https://kingproxy.de/p2-main/api/server2.php");
+$server_vip_1 = file_get_contents("https://kimoss8.herokuapp.com/api/server_vip1.php");
+$server_vip_2 = file_get_contents("https://kingproxy.de/p2-main/api/server_vip2.php");
+//=================Functions====================\\
+//=================Functions====================\\
+function makereq($method, $datas = [])
+{
+  $url = "https://api.telegram.org/bot" . API_KEY . "/" . $method;
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($datas));
+  $res = curl_exec($ch);
+  if (curl_error($ch)) {
+    var_dump(curl_error($ch));
+  } else {
+    return json_decode($res);
+  }
+}
+
+function apiRequest($method, $parameters)
+{
+  if (!is_string($method)) {
+    error_log("Method name must be a string\n");
+    return false;
+  }
+  if (!$parameters) {
+    $parameters = array();
+  } else if (!is_array($parameters)) {
+    error_log("Parameters must be an array\n");
+    return false;
   }
   foreach ($parameters as $key => &$val) {
     if (!is_numeric($val) && !is_string($val)) {

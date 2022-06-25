@@ -1,7 +1,7 @@
 <?php
 
 header('Content-type: application/json;');
-function getProxies($channel)
+function getProxies()
 {
     $get = file_get_contents('https://t.me/s/GlypeX');
     preg_match_all('#href="(.*?)" target="_blank" rel="noopener"#', $get, $prxs);
@@ -14,14 +14,14 @@ function ExProxy($proxy)
     return ['link' => $proxy, 'server' => $info[1], 'port' => $info[2], 'secret' => $info[3]];
 }
 if (!is_null($_GET['channel'])) {
-    $prxs = getProxies($_GET['channel']);
+    $prxs = getProxies();
     if (!is_null($prxs)) {
         for ($p = count($prxs) - 1; $p >= 0; $p--) {
             $prxlist[] = ExProxy(html_entity_decode($prxs[$p]));
         }
         $poker = ['ok' => true, 'channel' => '@GlypeX', 'proxies' => $prxlist];
     } else {
-        $poker = ['ok' => false, 'channel' => '@GlypeX', 'message' => 'There is not any proxy in @' . $_GET['channel']];
+        $poker = ['ok' => false, 'channel' => '@GlypeX', 'message' => 'There is not any proxy in @'];
     }
 } else {
     $poker = ['ok' => false, 'channel' => '@GlypeX', 'message' => 'I need channel param :|'];

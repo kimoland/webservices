@@ -90,19 +90,20 @@ bot('SendPhoto',[
 ]);
 bot('sendMessage',[
     'chat_id'=>$logchchannel,
-    'text'=>"₳ $Title $Year
+    'photo'=>$Poster,
+    'caption'=>"₳ $Title $Year
     
-    ⚡️$imdbRating | ✅$Metascore
+⚡️$imdbRating | ✅$Metascore
     
-    ▷ $Rated
-    ۞ $Genre
+▷ $Rated
+۞ $Genre
              
-    ∰ $Plot
+∰ $Plot
              
-    ※ $Country
+※ $Country
     
-    ◆ #Movie
-    ◈ @King_Movie7",
+◆ #Movie
+◈ @King_Movie7",
     'reply_markup'=> json_encode([
     'inline_keyboard'=>[
     [['text'=>"$Runtime",'callback_data'=>'is_join']],

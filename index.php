@@ -89,7 +89,7 @@ bot('SendPhoto',[
 ]])
 ]);
 bot('sendMessage',[
-    'chat_id'=>$chat_id,
+    'chat_id'=>$logchchannel,
     'text'=>"₳ $Title $Year
     
     ⚡️$imdbRating | ✅$Metascore

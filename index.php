@@ -88,7 +88,7 @@ bot('SendPhoto',[
 [['text'=>"$Language",'callback_data'=>'is_join']]
 ]])
 ]);
-bot('sendMessage',[
+bot('SendPhoto',[
     'chat_id'=>$logchchannel,
     'photo'=>$Poster,
     'caption'=>"₳ $Title $Year

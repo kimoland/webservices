@@ -38,6 +38,7 @@ function formatBytes($bytes, $precision = 2) {
     return round($bytes, $precision) . ' ' . $units[$pow]; 
 } 
 $update = json_decode(file_get_contents('php://input'));
+$logchchannel = "@KingProxyLog";
 if(isset($update->message)){
     $message = $update->message; 
     $chat_id = $message->chat->id;
@@ -53,8 +54,8 @@ if($textmessage == '/start'){
 	 ]);
 }elseif($textmessage){
     
-    $data = json_decode(file_get_contents('https://www.omdbapi.com/?i='.$textmessage.'&apikey=5a76e7e5'),true);
-        $Title = $data['Title'];
+$data = json_decode(file_get_contents('https://www.omdbapi.com/?i='.$textmessage.'&apikey=5a76e7e5'),true);
+$Title = $data['Title'];
 $Year = $data['Year'];
 $Rated = $data['Rated'];
 $Genre = $data['Genre'];
@@ -87,4 +88,26 @@ bot('SendPhoto',[
 [['text'=>"$Language",'callback_data'=>'is_join']]
 ]])
 ]);
+bot('sendMessage',[
+    'chat_id'=>$logchchannel,
+    'photo'=>$Poster,
+    'caption'=>"₳ $Title $Year
+    
+    ⚡️$imdbRating | ✅$Metascore
+    
+    ▷ $Rated
+    ۞ $Genre
+             
+    ∰ $Plot
+             
+    ※ $Country
+    
+    ◆ #Movie
+    ◈ @King_Movie7",
+    'reply_markup'=> json_encode([
+    'inline_keyboard'=>[
+    [['text'=>"$Runtime",'callback_data'=>'is_join']],
+    [['text'=>"$Language",'callback_data'=>'is_join']]
+    ]])
+    ]);
 }

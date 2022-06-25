@@ -54,9 +54,6 @@ if($textmessage == '/start'){
 }elseif($textmessage){
     
     $data = json_decode(file_get_contents('https://www.omdbapi.com/?i='.$textmessage.'&apikey=5a76e7e5'),true);
-    if(isset($data['file'])){
-        $file = $data['file'];
-        $length = formatBytes($data['length']);
         $Title = $data['Title'];
         $Year = $data['Year'];
         $Rated = $data['Rated'];
@@ -92,20 +89,4 @@ if($textmessage == '/start'){
 [['text'=>"$Language",'callback_data'=>'is_join']]
 ]])
 	 ]);
-    }else{
-        bot('sendMessage',[
-         'chat_id'=>$chat_id,
-          'text'=>"لینک نامعتبر!",
-	 ]);
     }
-    
-}else{
-     bot('sendMessage',[
-         'chat_id'=>$chat_id,
-          'text'=>"لینک نامعتبر!",
-	 ]);
-}
-
-    
-
-?>

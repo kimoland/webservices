@@ -3,7 +3,7 @@
 header('Content-type: application/json;');
 function getProxies($channel)
 {
-    $get = file_get_contents('https://t.me/s/' . $channel);
+    $get = file_get_contents('https://t.me/s/GlypeX');
     preg_match_all('#href="(.*?)" target="_blank" rel="noopener"#', $get, $prxs);
     preg_match_all('#class="tgme_widget_message_inline_button url_button" href="(.*?)"#', $get, $in_prxs);
     return $in_prxs[1] ?: $prxs[1];

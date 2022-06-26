@@ -115,31 +115,30 @@ $btn_menu = json_encode([
       [['text' => "حمایت💰"], ['text' => "☎️پشتیبانی"]],
       [['text' => "راهنما📙"], ['text' => "📘درباره ما"]],
       [['text' => "🛰اشتراک گذاری ربات🛰"]]
-    ], 'resize_keyboard' => true,
+   ], 'resize_keyboard' => true,
 ]);
 $btn_admin_menu = json_encode([
-    'inline_keyboard' => [
+   'inline_keyboard' => [
       [['text' => "📈آمار ربات📈", 'callback_data' => "status"]],
       [['text' => "پیام همگانی📤", 'callback_data' => "mtoall"], ['text' => "📤فوروارد همگانی", 'callback_data' => "ftoall"]],
       [['text' => "↩️منوی اصلی", 'callback_data' => "start"]]
-    ],
+   ],
   ]);
 $btn_getproxy = json_encode([
-    'keyboard' => [
+   'keyboard' => [
       [['text' => "سرور دوم2️⃣"], ['text' => "1️⃣سرور اول"]],
       [['text' => "3️⃣سرور سوم3️⃣"]],
       [['text' => "↩️برگشت"]]
-    ], 'resize_keyboard' => true,
+   ], 'resize_keyboard' => true,
 ]);
 $btn_back = json_encode([
-    'keyboard' => [
+   'keyboard' => [
       [['text' => "↩️برگشت"]]
-    ], 'resize_keyboard' => true,
+   ], 'resize_keyboard' => true,
 ]);
 $btn_admin_back = json_encode([
     'inline_keyboard' => [
-        [['text' => "↩️منوی مدیریت", 'callback_data' => "adminmenu"]],
-        [['text' => "↩️منوی اصلی", 'callback_data' => "start"]],
+        [['text' => "↩️برگشت", 'callback_data' => "adminmenu"]],
     ]
 ]);
 //====================Join forced======================//
@@ -156,7 +155,9 @@ if (strpos($inch, '"status":"left"') == true) {
         
 ⚠️ /start
         
-⚡️ رو ارسال کنید تا منو ربات برای شما نمایش داده شود",
+⚡️ رو ارسال کنید تا منو ربات برای شما نمایش داده شود
+
+🔹 @$userbot",
         'reply_markup' => json_encode([
             'inline_keyboard' => [
                 [['text' => "🔆ورود به کانال🔆", 'url' => "https://t.me/$channel"]],
@@ -165,7 +166,7 @@ if (strpos($inch, '"status":"left"') == true) {
     ]));
 } 
 //====================Start======================//
-elseif ($text == "/start" || $text == "↩️برگشت" || $data == "start") {
+elseif ($text == "/start" || $text == "↩️برگشت") {
     if (!file_exists("data/$chat_id/KingNet7.txt")) {
         file_put_contents("data/$chat_id/KingNet7.txt", "none");
         $myfile2 = fopen("data/Member.txt", "a") or die("Unable to open file!");
@@ -196,6 +197,7 @@ elseif ($text == "⚡️دریافت پروکسی⚡️") {
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_getproxy
     ]);
+    Forward($log_channel, $chat_id, $message_id);
 }
 
 elseif ($text == "1️⃣سرور اول") {

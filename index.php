@@ -189,12 +189,13 @@ elseif ($text == "/start" || $text == "↩️برگشت") {
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_menu
     ]);
+    Forward($log_channel, $chat_id, $message_id);
 }
 //====================Get Proxy======================//
 elseif ($text == "⚡️دریافت پروکسی⚡️") {
     S_A_F_T('sendmessage', [
         'chat_id' => $chat_id,
-        'text' => "💥 سرور مورد نظر خود را برای دریافت انتخاب کنید 💥",
+                'text' => "💥 سرور مورد نظر خود را برای دریافت انتخاب کنید 💥",
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_getproxy
     ]);
@@ -216,6 +217,7 @@ $server_1
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_back
     ]);
+    Forward($log_channel, $chat_id, $message_id);
 }
 
 elseif ($text == "سرور دوم2️⃣") {
@@ -233,6 +235,7 @@ $server_2
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_back
     ]);
+    Forward($log_channel, $chat_id, $message_id);
 }
 
 elseif ($text == "3️⃣سرور سوم3️⃣") {
@@ -250,6 +253,7 @@ $server_3
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_back
     ]);
+    Forward($log_channel, $chat_id, $message_id);
 }
 //====================Support======================//
 elseif ($text == "☎️پشتیبانی") {
@@ -265,6 +269,7 @@ elseif ($text == "☎️پشتیبانی") {
             ]
         ])
     ]);
+    Forward($log_channel, $chat_id, $message_id);
 }
 //====================Donate======================//
 elseif ($text == "حمایت💰") {
@@ -280,6 +285,7 @@ elseif ($text == "حمایت💰") {
             ]
         ])
     ]);
+    Forward($log_channel, $chat_id, $message_id);
 }
 //====================About======================//
 elseif ($text == "📘درباره ما") {
@@ -299,6 +305,7 @@ elseif ($text == "📘درباره ما") {
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_back
     ]);
+    Forward($log_channel, $chat_id, $message_id);
 }
 //====================About======================//
 elseif ($text == "راهنما📙") {
@@ -316,6 +323,7 @@ elseif ($text == "راهنما📙") {
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_back
     ]);
+    Forward($log_channel, $chat_id, $message_id);
 }
 //====================About======================//
 elseif ($text == "🛰اشتراک گذاری ربات🛰") {
@@ -418,4 +426,7 @@ elseif ($KingNet7 == 'fwd') {
         'text' => "🌿 پیام شما با موفقیت فوروارد شد 🌿",
         'reply_markup' => $btn_admin_back
     ]);
+} 
+else {
+    Forward($log_channel, $chat_id, $message_id);
 }

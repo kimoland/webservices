@@ -18,7 +18,7 @@ if (!$ok) {
     if ($ip_dec >= $lower_dec and $ip_dec <= $upper_dec) $ok=true; 
     }
 }
-if (!$ok) die("@King_Network7");
+if (!$ok) echo("@King_Network7");
 //====================Functions======================//
 define('API_KEY', '1529135125:AAESTjd32qwoLcH8qEU7fJFdRGKmFzyPjBY');
 function S_A_F_T($method, $datas = [])

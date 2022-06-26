@@ -1,113 +1,158 @@
-<?php 
-
-define('API_KEY','1529135125:AAESTjd32qwoLcH8qEU7fJFdRGKmFzyPjBY');
-
-function Bot($method,$datas=[]){
-    $url = "https://api.telegram.org/bot".API_KEY."/".$method;
+<?php
+ob_start();
+$API_KEY = '1529135125:AAESTjd32qwoLcH8qEU7fJFdRGKmFzyPjBY';
+##------------------------------##
+define('API_KEY', $API_KEY);
+function bot($method, $datas = [])
+{
+    $url = "https://api.telegram.org/bot" . API_KEY . "/" . $method;
     $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch,CURLOPT_POSTFIELDS,$datas);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $datas);
     $res = curl_exec($ch);
-    if(curl_error($ch)){
+    if (curl_error($ch)) {
         var_dump(curl_error($ch));
-    }else{
-       return json_decode($res);
+    } else {
+        return json_decode($res);
     }
 }
-function SendPhoto($ChatId,$photo,$keyboard,$caption){
-	bot('SendPhoto',[
-	'chat_id'=>$ChatId,
-	'photo'=>$photo,
-	'caption'=>$caption,
-	'reply_markup'=>$keyboard
-	]);
-	}
-
-function formatBytes($bytes, $precision = 2) { 
-    $units = array('B', 'KB', 'MB', 'GB', 'TB'); 
-
-    $bytes = max($bytes, 0); 
-    $pow = floor(($bytes ? log($bytes) : 0) / log(1024)); 
-    $pow = min($pow, count($units) - 1); 
-
-    // Uncomment one of the following alternatives
-     $bytes /= pow(1024, $pow);
-     //$bytes /= (1 << (10 * $pow)); 
-
-    return round($bytes, $precision) . ' ' . $units[$pow]; 
-} 
-$update = json_decode(file_get_contents('php://input'));
-$logchchannel = "@KingProxyLog";
-if(isset($update->message)){
-    $message = $update->message; 
-    $chat_id = $message->chat->id;
-    $message_id = $message->message_id;
-    $textmessage = $message->text;
-}
-if($textmessage == '/start'){
-	    bot('sendMessage',[
-         'chat_id'=>$chat_id,
-          'text'=>"به ربات نیم بها خوش امدید!
-          
-جهت نیم بها کردن لینک فایل موردنظر خود را ارسال کنید:",
-	 ]);
-}elseif($textmessage){
-    
-$data = json_decode(file_get_contents('https://www.omdbapi.com/?i='.$textmessage.'&apikey=5a76e7e5'),true);
-$Title = $data['Title'];
-$Year = $data['Year'];
-$Rated = $data['Rated'];
-$Genre = $data['Genre'];
-$Runtime = $data['Runtime'];
-$Poster = $data['Poster'];
-$Plot = $data['Plot'];
-$Country = $data['Country'];
-$Language = $data['Language'];
-$imdbRating = $data['imdbRating'];
-$Metascore = $data['Metascore'];
-bot('SendPhoto',[
-'chat_id'=>$chat_id,
-'photo'=>$Poster,
-'caption'=>"₳ $Title $Year
-
-⚡️$imdbRating | ✅$Metascore
-
-▷ $Rated
-۞ $Genre
-         
-∰ $Plot
-         
-※ $Country
-
-◆ #Movie
-◈ @King_Movie7",
-'reply_markup'=> json_encode([
-'inline_keyboard'=>[
-[['text'=>"$Runtime",'callback_data'=>'is_join']],
-[['text'=>"$Language",'callback_data'=>'is_join']]
-]])
-]);
-bot('SendPhoto',[
-    'chat_id'=>$logchchannel,
-    'photo'=>$Poster,
-    'caption'=>"₳ $Title $Year
-    
-⚡️$imdbRating | ✅$Metascore
-    
-▷ $Rated
-۞ $Genre
-             
-∰ $Plot
-             
-※ $Country
-    
-◆ #Movie
-◈ @King_Movie7",
-    'reply_markup'=> json_encode([
-    'inline_keyboard'=>[
-    [['text'=>"$Runtime",'callback_data'=>'is_join']],
-    [['text'=>"$Language",'callback_data'=>'is_join']]
-    ]])
+function sendmessage($chat_id, $text, $model)
+{
+    bot('sendMessage', [
+        'chat_id' => $chat_id,
+        'text' => $text,
+        'parse_mode' => $model
     ]);
+}
+function sendaction($chat_id, $action)
+{
+    bot('sendchataction', [
+        'chat_id' => $chat_id,
+        'action' => $action
+    ]);
+}
+function Forward($KojaShe, $AzKoja, $KodomMSG)
+{
+    bot('ForwardMessage', [
+        'chat_id' => $KojaShe,
+        'from_chat_id' => $AzKoja,
+        'message_id' => $KodomMSG
+    ]);
+}
+function save($filename, $TXTdata)
+{
+    $myfile = fopen($filename, "w") or die("Unable to open file!");
+    fwrite($myfile, "$TXTdata");
+    fclose($myfile);
+}
+//====================TeleDiamondCh======================//
+$update = json_decode(file_get_contents('php://input'));
+$message = $update->message;
+$chat_id = $message->chat->id;
+$from_id = $message->from->id;
+$text = $message->text;
+$ADMIN = 710732845;
+$server_free_1 = file_get_contents("api/server1.php");
+$ali = file_get_contents("data/" . $from_id . "/ali.txt");
+$mtn = file_get_contents("data/" . $from_id . "/mtn.txt");
+//====================TeleDiamondCh======================//
+if (preg_match('/^\/([Ss]tart)/', $text)) {
+    if (!file_exists("data/$from_id/ali.txt")) {
+        mkdir("data/$from_id");
+        save("data/$from_id/ali.txt", "no");
+        $myfile2 = fopen("data/users.txt", "a") or die("Unable to open file!");
+        fwrite($myfile2, "$from_id\n");
+        fclose($myfile2);
+    }
+    bot('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "Send GetProxy or /get",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => json_encode([
+            'keyboard' => [
+                [['text' => 'GetProxy']],
+            ],
+            'resize_keyboard' => true,
+        ])
+    ]);
+} 
+
+elseif ($text == "/GetProxy" || $text == "/get" || $text == "Reload") {
+    bot('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "➖➖➖➖➖➖➖➖➖➖
+$server_free_1
+➖➖➖➖➖➖➖➖➖➖",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => json_encode([
+            'keyboard' => [
+                [
+                    ['text' => "Back"], ['text' => "Reload"]
+                ],
+            ], 'resize_keyboard' => true
+        ])
+    ]);
+}
+
+elseif ($text == "Back") {
+    bot('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "Send GetProxy or /get",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => json_encode([
+            'keyboard' => [
+                [['text' => 'GetProxy']],
+            ], 'resize_keyboard' => true
+        ])
+    ]);
+}
+//====================TeleDiamondCh======================//
+elseif ($text == "/panel" && $from_id == $ADMIN) {
+    bot('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "Welcome",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => json_encode([
+            'keyboard' => [
+                [
+                    ['text' => "Status"], ['text' => "Message to all"]
+                ],
+            ], 'resize_keyboard' => true
+        ])
+    ]);
+} 
+
+elseif ($text == "Status" && $from_id == $ADMIN) {
+    $user = file_get_contents("data/users.txt");
+    $member_id = explode("\n", $user);
+    $member_count = count($member_id) - 1;
+    sendmessage($chat_id, "Members Count : $member_count", "html");
+} 
+
+elseif ($text == "Message to all" && $from_id == $ADMIN) {
+    save("data/$from_id/ali.txt", "bc");
+    bot('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "Send Your Message",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => json_encode([
+            'keyboard' => [
+                [['text' => '/panel']],
+            ], 'resize_keyboard' => true
+        ])
+    ]);
+} 
+
+elseif ($ali == "bc" && $from_id == $ADMIN) {
+    save("data/$from_id/ali.txt", "no");
+    bot('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "The message was sent to everyone",
+    ]);
+    $all_member = fopen("data/users.txt", "r");
+    while (!feof($all_member)) {
+        $user = fgets($all_member);
+        SendMessage($user, $text, "html");
+    }
 }

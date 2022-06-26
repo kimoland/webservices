@@ -9,14 +9,40 @@ function bot($method, $datas = [])
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $datas);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($datas));
     $res = curl_exec($ch);
     if (curl_error($ch)) {
-        var_dump(curl_error($ch));
+      var_dump(curl_error($ch));
     } else {
-        return json_decode($res);
+      return json_decode($res);
     }
-}
+  }
+
+  function apiRequest($method, $parameters)
+  {
+    if (!is_string($method)) {
+      error_log("Method name must be a string\n");
+      return false;
+    }
+    if (!$parameters) {
+      $parameters = array();
+    } else if (!is_array($parameters)) {
+      error_log("Parameters must be an array\n");
+      return false;
+    }
+    foreach ($parameters as $key => &$val) {
+      if (!is_numeric($val) && !is_string($val)) {
+        $val = json_encode($val);
+      }
+    }
+    $url = "https://api.telegram.org/bot" . API_KEY . "/" . $method . '?' . http_build_query($parameters);
+    $handle = curl_init($url);
+    curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($handle, CURLOPT_TIMEOUT, 60);
+    return exec_curl_request($handle);
+  }
+
 function sendmessage($chat_id, $text, $model)
 {
     bot('sendMessage', [
@@ -53,11 +79,11 @@ $chat_id = $message->chat->id;
 $from_id = $message->from->id;
 $text = $message->text;
 $ADMIN = 710732845;
-$server_free_1 = file_get_contents("proxy-tel/api_1.php");
+$server_free_1 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_1.php");
 $ali = file_get_contents("data/" . $from_id . "/ali.txt");
 $mtn = file_get_contents("data/" . $from_id . "/mtn.txt");
 //====================TeleDiamondCh======================//
-if ($text == "/start" || $text == "Back") {
+if ($text == '/start') {
     if (!file_exists("data/$from_id/ali.txt")) {
         mkdir("data/$from_id");
         save("data/$from_id/ali.txt", "no");

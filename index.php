@@ -104,6 +104,7 @@ $GetINFObot = json_decode(file_get_contents("https://api.telegram.org/bot". API_
 $userbot = $GetINFObot->result->username;
 $ADMIN = 710732845; 
 $channel = "KimoLand";
+$log_channel = "@KingProxyLog";
 $server_1 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_1.php");
 $server_2 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_2.php");
 $server_3 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_3.php");

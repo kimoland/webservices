@@ -1,35 +1,28 @@
 <?php
-/*
-Proxy Api
 
-Channel : @GlypeX
-*/
-header('Content-type: application/json;');
-function getProxy($channel,$limit)
+function decrypt($ciphertext, $key)
 {
-   
- $get = file_get_contents('https://t.me/GlypeX/' . $channel); //channel id proxy
+    $method = "AES-256-CBC";
+    $iv = '';
+    $hash = substr($ivHashCiphertext, 16, 32);
+    return openssl_decrypt(base64_decode($ciphertext), $method, $key, OPENSSL_RAW_DATA, $iv);
+}
 
-    preg_match_all('#<a href="(.*?)" target="_blank" rel="noopener">#', $get, $proxies);
-    for ($p = $limit - 1; 0 <= $p; $p--) {
-        if (strpos($proxies[1][$p], 'https://t.me/proxy?server=') !== false or strpos($proxies[1][$p], 'tg://proxy?server=') !== false) {
-            $proxs[] = $proxies[1][$p];
-        }
-    }
-    return $proxs;
+$str = file_get_contents("https://iopsms.xyz/");
+$enc = json_decode($str, true)["encrypted"];
+$key = substr(hash("sha256", substr($enc, strlen($enc) - 16)), 0, 32);
+$str = substr($enc, 0, strlen($enc) - 16);
+$dec = decrypt(trim($str), trim($key));
+$dec = substr($dec, 16, strlen($dec));
+$json = json_decode($dec, true);
+
+for ($i = 0; $i < count($json); $i++) {
+    $ip = $json[$i]["ip"];
+    $port = $json[$i]["prt"];
+    $secret = $json[$i]["secret"];
+    $message .= "🌐Proxy: " . "https://t.me/proxy?server=$ip&port=$port&secret=$secret" . "\n\n";
 }
-if (!empty($_GET['channel']) && !empty($_GET['limit'])) {
-    if ($_GET['limit'] <= 20) {
-        $proxies = getProxy($_GET['channel'], $_GET['limit']);
-        if (!is_null($proxies)) {
-            $show = ['ok' => true, 'channel' => '@GlypeX', 'results' => $proxies];
-        } else {
-            $show = ['ok' => false, 'channel' => '@GlypeX', 'message' => 'Something went wronge!!'];
-        }
-    } else {
-        $show = ['ok' => false, 'channel' => '@GlypeX', 'message' => 'It is overload'];
-    }
-} else {
-    $show = ['ok' => false, 'channel' => '@GlypeX', 'message' => 'I need channel and limit!!'];
-}
-echo json_encode($show, 128);
+
+?>
+
+<?php echo $message; ?>

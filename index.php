@@ -104,9 +104,9 @@ $userbot = "KingProxy7Bot";
 $ADMIN = 710732845; 
 $channel = "King_Network7";
 $log_channel = "@KingProxyLog";
-$server_1 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_1.php");
-$server_2 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_2.php");
-$server_3 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_3.php");
+$server_1 = file_get_contents("https://proxifer.herokuapp.com//proxy-tel/api_1.php");
+$server_2 = file_get_contents("https://proxifer.herokuapp.com//proxy-tel/api_2.php");
+$server_3 = file_get_contents("https://proxifer.herokuapp.com//proxy-tel/api_3.php");
 $inch = file_get_contents("https://api.telegram.org/bot" . API_KEY . "/getChatMember?chat_id=@$channel&user_id=" . $from_id); // ایدی کانال
 //====================Buttons======================//
 $btn_menu = json_encode([

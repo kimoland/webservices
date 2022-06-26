@@ -8,7 +8,7 @@ ini_set( "log_errors","Off" );
 ini_set( "expose_php","Off" );
 ini_set( "Allow_url_fopen","Off" );
 //====================Functions======================//
-define('API_KEY', '1529135125:AAESTjd32qwoLcH8qEU7fJFdRGKmFzyPjBY');
+define('API_KEY', '1491491242:AAHX1Yj0f6hsI8fTDD_wg2DbAh355DGqPo4');
 function S_A_F_T($method, $datas = [])
 {
     $url = "https://api.telegram.org/bot" . API_KEY . "/" . $method;
@@ -100,10 +100,9 @@ $data = $update->callback_query->data;
 $chatid = $update->callback_query->message->chat->id;
 $message_id2 = $update->callback_query->message->message_id;
 @$KingNet7 = file_get_contents("data/$chat_id/KingNet7.txt");
-$GetINFObot = json_decode(file_get_contents("https://api.telegram.org/bot". API_KEY ."/getMe"));
-$userbot = $GetINFObot->result->username;
+$userbot = "KingProxy7Bot";
 $ADMIN = 710732845; 
-$channel = "KimoLand";
+$channel = "King_Network7";
 $log_channel = "@KingProxyLog";
 $server_1 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_1.php");
 $server_2 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_2.php");

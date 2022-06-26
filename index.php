@@ -1,8 +1,24 @@
 <?php
 
-error_reporting(0);
-set_time_limit(0);
 flush();
+ob_start();
+ob_implicit_flush(1);
+error_reporting( 0 );
+ini_set( "log_errors","Off" );
+ini_set( "expose_php","Off" );
+ini_set( "Allow_url_fopen","Off" );
+
+$telegram_ip_ranges = [['lower' => '149.154.160.0', 'upper' => '149.154.175.255'],['lower' => '91.108.4.0','upper' => '91.108.7.255']];
+$ip_dec = (float) sprintf('%u', ip2long($_SERVER['REMOTE_ADDR']));
+$ok=false;
+foreach ($telegram_ip_ranges as $telegram_ip_range) {
+if (!$ok) {
+    $lower_dec = (float) sprintf('%u', ip2long($telegram_ip_range['lower']));
+    $upper_dec = (float) sprintf('%u', ip2long($telegram_ip_range['upper']));
+    if ($ip_dec >= $lower_dec and $ip_dec <= $upper_dec) $ok=true; 
+    }
+}
+if (!$ok) die("@King_Network7");
 //====================Functions======================//
 define('API_KEY', '1529135125:AAESTjd32qwoLcH8qEU7fJFdRGKmFzyPjBY');
 function S_A_F_T($method, $datas = [])
@@ -96,8 +112,13 @@ $data = $update->callback_query->data;
 $chatid = $update->callback_query->message->chat->id;
 $message_id2 = $update->callback_query->message->message_id;
 @$KingNet7 = file_get_contents("data/$chat_id/KingNet7.txt");
-$ADMIN = 710732845; ////// ایدی عددی
-$channel = "KimoLand"; ////// ایدی عددی
+$GetINFObot = json_decode(file_get_contents("https://api.telegram.org/bot". API_KEY ."/getMe"));
+$userbot = $GetINFObot->result->username;
+$ADMIN = 710732845; 
+$channel = "KimoLand";
+$server_1 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_1.php");
+$server_2 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_2.php");
+$server_3 = file_get_contents("https://afrety.herokuapp.com/proxy-tel/api_3.php");
 $inch = file_get_contents("https://api.telegram.org/bot" . API_KEY . "/getChatMember?chat_id=@$channel&user_id=" . $from_id); // ایدی کانال
 //====================Buttons======================//
 $btn_menu = json_encode([
@@ -109,16 +130,16 @@ $btn_menu = json_encode([
     ], 'resize_keyboard' => true,
 ]);
 $btn_admin_menu = json_encode([
-    'keyboard' => [
-      [['text' => "📊آمار ربات📊"]],
-      [['text' => "فوروارد همگانی📤"], ['text' => "📤ارسال همگانی"]],
-      [['text' => "↩️برگشت"]]
-    ], 'resize_keyboard' => true,
+    'inline_keyboard' => [
+      [['text' => "📈آمار ربات📈", 'callback_data' => "status"]],
+      [['text' => "پیام همگانی📤", 'callback_data' => "mtoall"], ['text' => "📤فوروارد همگانی", 'callback_data' => "ftoall"]],
+      [['text' => "↩️منوی اصلی", 'callback_data' => "start"]]
+    ],
   ]);
 $btn_getproxy = json_encode([
     'keyboard' => [
       [['text' => "سرور دوم2️⃣"], ['text' => "1️⃣سرور اول"]],
-      [['text' => "سرور چهارم4️⃣"], ['text' => "3️⃣سرور سوم"]],
+      [['text' => "3️⃣سرور سوم3️⃣"]],
       [['text' => "↩️برگشت"]]
     ], 'resize_keyboard' => true,
 ]);
@@ -126,6 +147,12 @@ $btn_back = json_encode([
     'keyboard' => [
       [['text' => "↩️برگشت"]]
     ], 'resize_keyboard' => true,
+]);
+$btn_admin_back = json_encode([
+    'inline_keyboard' => [
+        [['text' => "↩️منوی مدیریت", 'callback_data' => "adminmenu"]],
+        [['text' => "↩️منوی اصلی", 'callback_data' => "start"]],
+    ]
 ]);
 //====================Join forced======================//
 if (strpos($inch, '"status":"left"') == true) {
@@ -144,13 +171,13 @@ if (strpos($inch, '"status":"left"') == true) {
 ⚡️ رو ارسال کنید تا منو ربات برای شما نمایش داده شود",
         'reply_markup' => json_encode([
             'inline_keyboard' => [
-                [['text' => "🔆 ورود به کانال 🔆", 'url' => "https://t.me/$channel"]],
+                [['text' => "🔆ورود به کانال🔆", 'url' => "https://t.me/$channel"]],
             ]
         ])
     ]));
 } 
 //====================Start======================//
-elseif ($text == "/start") {
+elseif ($text == "/start" || $text == "↩️برگشت" || $data == "start") {
     if (!file_exists("data/$chat_id/KingNet7.txt")) {
         file_put_contents("data/$chat_id/KingNet7.txt", "none");
         $myfile2 = fopen("data/Member.txt", "a") or die("Unable to open file!");
@@ -186,7 +213,15 @@ elseif ($text == "⚡️دریافت پروکسی⚡️") {
 elseif ($text == "1️⃣سرور اول") {
     S_A_F_T('sendmessage', [
         'chat_id' => $chat_id,
-        'text' => "💥 سرور مورد نظر خود را برای دریافت انتخاب کنید 💥",
+        'text' => "🔹 پروکسی های شما
+
+➖➖➖➖➖➖➖➖➖
+        
+$server_1
+        
+➖➖➖➖➖➖➖➖➖
+        
+🆔 @$channel",
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_back
     ]);
@@ -195,97 +230,170 @@ elseif ($text == "1️⃣سرور اول") {
 elseif ($text == "سرور دوم2️⃣") {
     S_A_F_T('sendmessage', [
         'chat_id' => $chat_id,
-        'text' => "💥 سرور مورد نظر خود را برای دریافت انتخاب کنید 💥",
+        'text' => "🔹 پروکسی های شما
+
+➖➖➖➖➖➖➖➖➖
+                
+$server_2
+                
+➖➖➖➖➖➖➖➖➖
+                
+🆔 @$channel",
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_back
     ]);
 }
 
-elseif ($text == "3️⃣سرور سوم") {
+elseif ($text == "3️⃣سرور سوم3️⃣") {
     S_A_F_T('sendmessage', [
         'chat_id' => $chat_id,
-        'text' => "💥 سرور مورد نظر خود را برای دریافت انتخاب کنید 💥",
-        'parse_mode' => "MarkDown",
-        'reply_markup' => $btn_back
-    ]);
-}
+        'text' => "🔹 پروکسی های شما
 
-elseif ($text == "سرور چهارم4️⃣") {
-    S_A_F_T('sendmessage', [
-        'chat_id' => $chat_id,
-        'text' => "💥 سرور مورد نظر خود را برای دریافت انتخاب کنید 💥",
+➖➖➖➖➖➖➖➖➖
+                
+$server_3
+                
+➖➖➖➖➖➖➖➖➖
+                
+🆔 @$channel",
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_back
     ]);
 }
-//====================Source_Hut======================//
-if ($text == "مدیریت") {
-    file_put_contents("data/$chat_id/KingNet7.txt", "no");
+//====================Support======================//
+elseif ($text == "☎️پشتیبانی") {
     S_A_F_T('sendmessage', [
-        'chat_id' => $ADMIN,
-        'text' => "مدیر گرامی به پنل مدیریت ربات ‌موشکی خوش امدید🙂",
+        'chat_id' => $chat_id,
+        'text' => "📞 برای گزارش مشکل، انتقاد، پیشنهاد و... با آیدی زیر در ارتباط باشید.
+
+🆔 @$channel",
         'parse_mode' => "MarkDown",
         'reply_markup' => json_encode([
             'inline_keyboard' => [
-                [
-                    ['text' => "📈آمار کلی و وضعیت ربات📉", 'callback_data' => "am"]
-                ],
-                [
-                    ['text' => "ارسال پیام به همه کاربران🙂", 'callback_data' => "send"], ['text' => "فروارد همگانی🤓", 'callback_data' => "fwd"]
-                ],
-                [
-                    ['text' => "برگرد خونه🏡🤠", 'callback_data' => "home"]
-                ],
+                [['text' => "💠گروه پشتیبانی💠", 'url' => "https://t.me/king_network7_GP"]],
             ]
         ])
     ]);
-} elseif ($data == "homee") {
-    file_put_contents("data/$chat_id/KingNet7.txt", "no");
-    sendAction($chat_id, 'typing');
-    S_A_F_T('sendMessage', [
+}
+//====================Donate======================//
+elseif ($text == "حمایت💰") {
+    S_A_F_T('sendmessage', [
         'chat_id' => $chat_id,
-        'message_id' => $message_id2,
-        'text' => "الان مثلا تو ادمین ربات ؟😐
-این قسمت برای ادمیناس لطفا دیگر تلاش نکنید😁",
+        'text' => "🔰 برای ادامه فعالیت ربات و تامین بخشی از هزینه های سرور میتوانید از طریق لینک زیر از ربات و تیم حمایت کنید.
+
+🆔 @$channel",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => json_encode([
+            'inline_keyboard' => [
+                [['text' => "〽️لینک دونیت〽️", 'url' => "https://payping.ir/d/WiZG"]],
+            ]
+        ])
     ]);
+}
+//====================About======================//
+elseif ($text == "📘درباره ما") {
+    S_A_F_T('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "👤 درباره ما
+
+➖➖➖➖➖➖➖➖➖
+↯طراحی: KingNetwork
+↯سرور: Exclusive
+↯ورژن: v-1.0
+↯اسپانسری: True
+↯حمایت: Donate
+➖➖➖➖➖➖➖➖➖
+
+🆔 @$channel",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => $btn_back
+    ]);
+}
+//====================About======================//
+elseif ($text == "راهنما📙") {
+    S_A_F_T('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "📚 راهنمای ربات
+
+➖➖➖➖➖➖➖➖➖
+⇇از اشتراک پروکسی ها خودداری کنید
+⇇بعد از اتصال VPN را خاموش کنید
+⇇پروکسی ها همیشه آپدیت می شوند
+➖➖➖➖➖➖➖➖➖
+        
+🆔 @$channel",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => $btn_back
+    ]);
+}
+//====================About======================//
+elseif ($text == "🛰اشتراک گذاری ربات🛰") {
+    S_A_F_T('sendphoto', [
+        'chat_id' => $update->message->chat->id,
+        'photo'=>"https://s6.uupload.ir/files/banner_mmxe.png",
+        'caption'=>"🔥 ربات پروکسی ضدفلیتر تلگرام
+〰️〰️〰️〰️〰️〰️〰️
+🔹 پرسرعت
+🔹 رایگان
+🔹 آپدیت آنی
+🔹 بدون اسپانسر
+🔹 ضدفیلتر و قوی
+〰️〰️〰️〰️〰️〰️〰️
+🆔 @$channels",
+        'reply_markup' => json_encode([
+        'inline_keyboard' =>
+        [
+            [['text' => "🔸ورود به ربات🔸", 'url' => "https://t.me/$userbot"]]
+        ]
+    ])
+]);
+}
+//====================Source_Hut======================//
+if ($text == "/botpanel") {
+    file_put_contents("data/$chat_id/KingNet7.txt", "no");
+    S_A_F_T('sendmessage', [
+        'chat_id' => $ADMIN,
+        'text' => "⚜️ خوش آمدید از منوی زیر استفاده کنید
+
+🆔 @$channel",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => $btn_admin_menu
+    ]);
+}
+
+elseif ($data == "adminmenu") {
+    file_put_contents("data/$chat_id/KingNet7.txt", "no");
     S_A_F_T('editmessagetext', [
         'chat_id' => $ADMIN,
         'message_id' => $message_id2,
-        'text' => "خوش امدید",
+        'text' => "⚜️ خوش آمدید از منوی زیر استفاده کنید
+
+🆔 @$channel",
         'parse_mode' => "MarkDown",
-        'reply_markup' => json_encode([
-            'inline_keyboard' => [
-                [
-                    ['text' => "📈آمار کلی و وضعیت ربات📉", 'callback_data' => "am"]
-                ],
-                [
-                    ['text' => "ارسال پیام به همه کاربران🙂", 'callback_data' => "send"], ['text' => "فروارد همگانی🤓", 'callback_data' => "fwd"]
-                ],
-                [
-                    ['text' => "برگرد خونه🏡🤠", 'callback_data' => "home"]
-                ],
-            ]
-        ])
+        'reply_markup' => $btn_admin_menu
     ]);
-} elseif ($data == "am") {
+} 
+
+elseif ($data == "status") {
     $user = file_get_contents("data/Member.txt");
     $member_id = explode("\n", $user);
     $member_count = count($member_id) - 1;
     S_A_F_T('answercallbackquery', [
         'callback_query_id' => $update->callback_query->id,
-        'text' => "تعداد ممبر ها : $member_count
-",
-
+        'text' => "🌟تعداد اعضای ربات : $member_count",
         'show_alert' => true
     ]);
-} elseif ($data == "send") {
+} 
+
+elseif ($data == "mtoall") {
     file_put_contents("data/$chatid/KingNet7.txt", "send");
     S_A_F_T('editmessagetext', [
         'chat_id' => $chatid,
         'message_id' => $message_id2,
-        'text' => "خوب پیام خودتون را برام بفرستید تا بفرستم برا  کاربرا  . بدو وقت ندارم😑",
+        'text' => "🌕 پیام خود را ارسال کنید",
     ]);
-} elseif ($KingNet7 == "send") {
+} 
+elseif ($KingNet7 == "send") {
     file_put_contents("data/$chat_id/KingNet7.txt", "no");
     $fp = fopen("data/Member.txt", 'r');
     while (!feof($fp)) {
@@ -294,26 +402,20 @@ if ($text == "مدیریت") {
     }
     S_A_F_T('sendMessage', [
         'chat_id' => $chat_id,
-        'text' => "با موفقیت برای همه کاربران ارسال شد",
-        'reply_markup' => json_encode([
-            'inline_keyboard' => [
-                [
-                    ['text' => "برگرد خونه🏡🤠", 'callback_data' => "home"]
-                ],
-                [
-                    ['text' => "برگشت مدیریت", 'callback_data' => "homee"]
-                ],
-            ]
-        ])
+        'text' => "🌿 پیام شما با موفقیت ارسال شد 🌿",
+        'reply_markup' => $btn_admin_back
     ]);
-} elseif ($data == "fwd") {
+} 
+
+elseif ($data == "ftoall") {
     file_put_contents("data/$chatid/KingNet7.txt", "fwd");
     S_A_F_T('editmessagetext', [
         'chat_id' => $chatid,
         'message_id' => $message_id2,
-        'text' => "خوب پیام خودتون را فروارد کنید فقط زود که حوصله ندارم😤",
+        'text' => "🌕 پیام خود را فوروارد کنید",
     ]);
-} elseif ($KingNet7 == 'fwd') {
+} 
+elseif ($KingNet7 == 'fwd') {
     file_put_contents("data/$chat_id/KingNet7.txt", "no");
     $forp = fopen("data/Member.txt", 'r');
     while (!feof($forp)) {
@@ -322,16 +424,15 @@ if ($text == "مدیریت") {
     }
     S_A_F_T('sendMessage', [
         'chat_id' => $chat_id,
-        'text' => "با موفقیت فروارد شد.",
-        'reply_markup' => json_encode([
-            'inline_keyboard' => [
-                [
-                    ['text' => "برگرد خونه🏡🤠", 'callback_data' => "home"]
-                ],
-                [
-                    ['text' => "برگشت مدیریت", 'callback_data' => "homee"]
-                ],
-            ]
-        ])
+        'text' => "🌿 پیام شما با موفقیت فوروارد شد 🌿",
+        'reply_markup' => $btn_admin_back
+    ]);
+}
+else
+{
+    S_A_F_T('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "⛔️ دستور نامشخص ⛔️",
+        'parse_mode' => "MarkDown",
     ]);
 }

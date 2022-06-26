@@ -214,7 +214,12 @@ $server_1
         
 🆔 @$channel",
         'parse_mode' => "MarkDown",
-        'reply_markup' => $btn_back
+        'reply_markup' => json_encode([
+        'keyboard'=>[
+                    [['text'=>"بروزرسانی سرور 1♻️"],['text'=>"↩️برگشت"]]
+                   ],
+                   'resize_keyboard'=>true,
+                    ])
     ]);
     Forward($log_channel, $chat_id, $message_id);
 }
@@ -232,7 +237,12 @@ $server_2
                 
 🆔 @$channel",
         'parse_mode' => "MarkDown",
-        'reply_markup' => $btn_back
+        'reply_markup' => json_encode([
+        'keyboard'=>[
+                    [['text'=>"بروزرسانی سرور 2♻️"],['text'=>"↩️برگشت"]]
+                   ],
+                   'resize_keyboard'=>true,
+                    ])
     ]);
     Forward($log_channel, $chat_id, $message_id);
 }
@@ -250,7 +260,79 @@ $server_3
                 
 🆔 @$channel",
         'parse_mode' => "MarkDown",
-        'reply_markup' => $btn_back
+        'reply_markup' => json_encode([
+        'keyboard'=>[
+                    [['text'=>"بروزرسانی سرور 3♻️"],['text'=>"↩️برگشت"]]
+                   ],
+                   'resize_keyboard'=>true,
+                    ])
+    ]);
+    Forward($log_channel, $chat_id, $message_id);
+}
+
+elseif ($text == "بروزرسانی سرور 1♻️") {
+    S_A_F_T('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "🔹 پروکسی های شما
+
+➖➖➖➖➖➖➖➖➖
+                
+$server_1
+                
+➖➖➖➖➖➖➖➖➖
+                
+🆔 @$channel",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => json_encode([
+        'keyboard'=>[
+                    [['text'=>"بروزرسانی سرور 1♻️"],['text'=>"↩️برگشت"]]
+                   ],
+                   'resize_keyboard'=>true,
+                    ])
+    ]);
+    Forward($log_channel, $chat_id, $message_id);
+}
+elseif ($text == "بروزرسانی سرور 2♻️") {
+    S_A_F_T('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "🔹 پروکسی های شما
+
+➖➖➖➖➖➖➖➖➖
+                
+$server_2
+                
+➖➖➖➖➖➖➖➖➖
+                
+🆔 @$channel",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => json_encode([
+        'keyboard'=>[
+                    [['text'=>"بروزرسانی سرور 2♻️"],['text'=>"↩️برگشت"]]
+                   ],
+                   'resize_keyboard'=>true,
+                    ])
+    ]);
+    Forward($log_channel, $chat_id, $message_id);
+}
+elseif ($text == "بروزرسانی سرور 3♻️") {
+    S_A_F_T('sendmessage', [
+        'chat_id' => $chat_id,
+        'text' => "🔹 پروکسی های شما
+
+➖➖➖➖➖➖➖➖➖
+                
+$server_3
+                
+➖➖➖➖➖➖➖➖➖
+                
+🆔 @$channel",
+        'parse_mode' => "MarkDown",
+        'reply_markup' => json_encode([
+        'keyboard'=>[
+                    [['text'=>"بروزرسانی سرور 3♻️"],['text'=>"↩️برگشت"]]
+                   ],
+                   'resize_keyboard'=>true,
+                    ])
     ]);
     Forward($log_channel, $chat_id, $message_id);
 }

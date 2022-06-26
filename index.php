@@ -53,11 +53,11 @@ $chat_id = $message->chat->id;
 $from_id = $message->from->id;
 $text = $message->text;
 $ADMIN = 710732845;
-$server_free_1 = file_get_contents("api/server1.php");
+$server_free_1 = file_get_contents("proxy-tel/api_1.php");
 $ali = file_get_contents("data/" . $from_id . "/ali.txt");
 $mtn = file_get_contents("data/" . $from_id . "/mtn.txt");
 //====================TeleDiamondCh======================//
-if (preg_match('/^\/([Ss]tart)/', $text)) {
+if ($text == "/start" || $text == "Back") {
     if (!file_exists("data/$from_id/ali.txt")) {
         mkdir("data/$from_id");
         save("data/$from_id/ali.txt", "no");
@@ -90,19 +90,6 @@ $server_free_1
                 [
                     ['text' => "Back"], ['text' => "Reload"]
                 ],
-            ], 'resize_keyboard' => true
-        ])
-    ]);
-}
-
-elseif ($text == "Back") {
-    bot('sendmessage', [
-        'chat_id' => $chat_id,
-        'text' => "Send GetProxy or /get",
-        'parse_mode' => "MarkDown",
-        'reply_markup' => json_encode([
-            'keyboard' => [
-                [['text' => 'GetProxy']],
             ], 'resize_keyboard' => true
         ])
     ]);

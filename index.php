@@ -104,7 +104,7 @@ if ($text == '/start') {
     ]);
 } 
 
-elseif ($text == "/GetProxy" || $text == "/get" || $text == "Reload") {
+elseif ($text == "GetProxy" || $text == "/get" || $text == "Reload") {
     bot('sendmessage', [
         'chat_id' => $chat_id,
         'text' => "➖➖➖➖➖➖➖➖➖➖

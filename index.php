@@ -1,12 +1,6 @@
 <?php
 
-flush();
-ob_start();
-ob_implicit_flush(1);
-error_reporting( 0 );
-ini_set( "log_errors","Off" );
-ini_set( "expose_php","Off" );
-ini_set( "Allow_url_fopen","Off" );
+
 //====================Functions======================//
 define('API_KEY', '1491491242:AAHX1Yj0f6hsI8fTDD_wg2DbAh355DGqPo4');
 function S_A_F_T($method, $datas = [])
@@ -251,73 +245,6 @@ $server_3
 🆔 @$channel",
         'parse_mode' => "MarkDown",
         'reply_markup' => $btn_back
-    ]);
-    Forward($log_channel, $chat_id, $message_id);
-}
-
-elseif ($text == "بروزرسانی سرور 1♻️") {
-    S_A_F_T('sendmessage', [
-        'chat_id' => $chat_id,
-        'text' => "🔹 پروکسی های شما
-
-➖➖➖➖➖➖➖➖➖
-                
-$server_1
-                
-➖➖➖➖➖➖➖➖➖
-                
-🆔 @$channel",
-        'parse_mode' => "MarkDown",
-        'reply_markup' => json_encode([
-        'keyboard'=>[
-                    [['text'=>"بروزرسانی سرور 1♻️"],['text'=>"↩️برگشت"]]
-                   ],
-                   'resize_keyboard'=>true,
-                    ])
-    ]);
-    Forward($log_channel, $chat_id, $message_id);
-}
-elseif ($text == "بروزرسانی سرور 2♻️") {
-    S_A_F_T('sendmessage', [
-        'chat_id' => $chat_id,
-        'text' => "🔹 پروکسی های شما
-
-➖➖➖➖➖➖➖➖➖
-                
-$server_2
-                
-➖➖➖➖➖➖➖➖➖
-                
-🆔 @$channel",
-        'parse_mode' => "MarkDown",
-        'reply_markup' => json_encode([
-        'keyboard'=>[
-                    [['text'=>"بروزرسانی سرور 2♻️"],['text'=>"↩️برگشت"]]
-                   ],
-                   'resize_keyboard'=>true,
-                    ])
-    ]);
-    Forward($log_channel, $chat_id, $message_id);
-}
-elseif ($text == "بروزرسانی سرور 3♻️") {
-    S_A_F_T('sendmessage', [
-        'chat_id' => $chat_id,
-        'text' => "🔹 پروکسی های شما
-
-➖➖➖➖➖➖➖➖➖
-                
-$server_3
-                
-➖➖➖➖➖➖➖➖➖
-                
-🆔 @$channel",
-        'parse_mode' => "MarkDown",
-        'reply_markup' => json_encode([
-        'keyboard'=>[
-                    [['text'=>"بروزرسانی سرور 3♻️"],['text'=>"↩️برگشت"]]
-                   ],
-                   'resize_keyboard'=>true,
-                    ])
     ]);
     Forward($log_channel, $chat_id, $message_id);
 }

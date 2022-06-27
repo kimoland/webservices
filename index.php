@@ -214,12 +214,7 @@ $server_1
         
 🆔 @$channel",
         'parse_mode' => "MarkDown",
-        'reply_markup' => json_encode([
-        'keyboard'=>[
-                    [['text'=>"بروزرسانی سرور 1♻️"],['text'=>"↩️برگشت"]]
-                   ],
-                   'resize_keyboard'=>true,
-                    ])
+        'reply_markup' => $btn_back
     ]);
     Forward($log_channel, $chat_id, $message_id);
 }
@@ -237,12 +232,7 @@ $server_2
                 
 🆔 @$channel",
         'parse_mode' => "MarkDown",
-        'reply_markup' => json_encode([
-        'keyboard'=>[
-                    [['text'=>"بروزرسانی سرور 2♻️"],['text'=>"↩️برگشت"]]
-                   ],
-                   'resize_keyboard'=>true,
-                    ])
+        'reply_markup' => $btn_back
     ]);
     Forward($log_channel, $chat_id, $message_id);
 }
@@ -260,12 +250,7 @@ $server_3
                 
 🆔 @$channel",
         'parse_mode' => "MarkDown",
-        'reply_markup' => json_encode([
-        'keyboard'=>[
-                    [['text'=>"بروزرسانی سرور 3♻️"],['text'=>"↩️برگشت"]]
-                   ],
-                   'resize_keyboard'=>true,
-                    ])
+        'reply_markup' => $btn_back
     ]);
     Forward($log_channel, $chat_id, $message_id);
 }

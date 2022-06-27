@@ -96,7 +96,7 @@ $message_id2 = $update->callback_query->message->message_id;
 @$KingNet7 = file_get_contents("data/$chat_id/KingNet7.txt");
 $userbot = "KingProxy7Bot";
 $ADMIN = 710732845; 
-$channel = "King_Network7";
+$channel = "KimoLand";
 $log_channel = "@KingProxyLog";
 $server_1 = file_get_contents("https://kn7proxytel.herokuapp.com//proxy-tel/api_1.php");
 $server_2 = file_get_contents("https://kn7proxytel.herokuapp.com//proxy-tel/api_2.php");
@@ -137,7 +137,6 @@ $btn_admin_back = json_encode([
 ]);
 //====================Join forced======================//
 if (strpos($inch, '"status":"left"') == true) {
-    sendAction($chat_id, 'typing');
     var_dump(S_A_F_T('sendMessage', [
         'message_id' => $message_id2,
         'chat_id' => $update->message->chat->id,
@@ -169,7 +168,6 @@ elseif ($text == "/start" || $text == "↩️برگشت") {
         fwrite($myfile2, "$chat_id\n");
         fclose($myfile2);
     }
-    sendAction($chat_id, 'typing');
     S_A_F_T('sendmessage', [
         'chat_id' => $chat_id,
         'text' => "🔆 سلام به ربات کینگ پروکسی خوش اومدی!

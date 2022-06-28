@@ -9,3 +9,4 @@ for ($i = 0; $i < 6; $i++) {
 }
 
 ?>
+<?php echo $message; ?>

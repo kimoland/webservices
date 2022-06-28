@@ -7,7 +7,7 @@ for ($i = 0; $i < 8;$i++)
     $port = $prox[$i]["port"];
     $secret = $prox[$i]["secret"];
     $ping = $prox[$i]["ping"];
-    $message2 .= "🌐 Proxy: "."https://t.me/proxy?server=$host&port=$port&secret=$secret"."\n"."⚡️ Ping: $ping"."\n\n";
+    $message .= "🌐 Proxy: "."https://t.me/proxy?server=$host&port=$port&secret=$secret"."\n"."⚡️ Ping: $ping"."\n\n";
 }
 
 ?>

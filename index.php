@@ -33,7 +33,6 @@ $s_comment = $update->message->reply_to_message->forward_from->id;
 $get_comment = file_get_contents("user/$from_id/comment");
 $server_1 = file_get_contents("https://kn7-prox47.herokuapp.com/proxy-tel/api_1.php");
 $server_2 = file_get_contents("https://kn7-prox47.herokuapp.com/proxy-tel/api_2.php");
-$server_3 = file_get_contents("https://kn7-prox47.herokuapp.com/proxy-tel/api_3.php");
 $server_4 = file_get_contents("https://kn7-prox47.herokuapp.com/proxy-tel/api_4.php");
 $inch = file_get_contents("https://api.telegram.org/bot".API_KEY."/getChatMember?chat_id=@$channel&user_id=".$from_id); 
 //====================Buttons======================//

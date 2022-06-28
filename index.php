@@ -200,6 +200,7 @@ $server_3
 }
 
 elseif ($text == "سرور چهارم 4️⃣" || $text == "بروزرسانی سرور 4 ♻️") {
+$server_4 = file_get_contents("https://kn7-prox47.herokuapp.com/proxy-tel/api_4.php");
     bot('sendmessage', [
         'chat_id' => $chat_id,
         'text' => "🔹 پروکسی های شما

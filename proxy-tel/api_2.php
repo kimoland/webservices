@@ -1,7 +1,7 @@
 <?php
 
 $prox=json_decode(file_get_contents("https://mtpro.xyz/api/?type=mtproto"),true);
-for ($i = 0; $i < 3;$i++)
+for ($i = 0; $i < 8;$i++)
 {
     $host = $prox[$i]["host"];
     $port = $prox[$i]["port"];

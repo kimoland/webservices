@@ -24,3 +24,4 @@ for ($i = 0; $i < count($json); $i++) {
 }
 
 ?>
+<?php echo $message; ?>

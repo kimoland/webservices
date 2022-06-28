@@ -5,7 +5,7 @@ for ($i = 0; $i < 6; $i++) {
     $host = $prox[$i]["ip"];
     $port = $prox[$i]["prt"];
     $secret = $prox[$i]["secret"];
-    $message3 .= "🌐 Proxy: "."https://t.me/proxy?server=$host&port=$port&secret=$secret"."\n\n";
+    $message .= "🌐 Proxy: "."https://t.me/proxy?server=$host&port=$port&secret=$secret"."\n\n";
 }
 
 ?>

@@ -31,9 +31,6 @@ $username = $update->message->from->username;
 $step_r = file_get_contents("user/$chat_id/step.txt");
 $s_comment = $update->message->reply_to_message->forward_from->id;
 $get_comment = file_get_contents("user/$from_id/comment");
-$server_1 = file_get_contents("https://kn7-prox47.herokuapp.com/proxy-tel/api_1.php");
-$server_2 = file_get_contents("https://kn7-prox47.herokuapp.com/proxy-tel/api_2.php");
-$server_3 = file_get_contents("https://kn7-prox47.herokuapp.com/proxy-tel/api_3.php");
 $inch = file_get_contents("https://api.telegram.org/bot".API_KEY."/getChatMember?chat_id=@$channel&user_id=".$from_id); 
 //====================Buttons======================//
 $btn_menu = json_encode([
@@ -146,6 +143,7 @@ elseif ($text == "⚡️ دریافت پروکسی ⚡️") {
 }
 
 elseif ($text == "1️⃣ سرور اول" || $text == "بروزرسانی سرور 1 ♻️") {
+$server_1 = file_get_contents("https://kn7-prox47.herokuapp.com/proxy-tel/api_1.php");
     bot('sendmessage', [
         'chat_id' => $chat_id,
         'text' => "🔹 پروکسی های شما
@@ -164,6 +162,7 @@ $server_1
 }
 
 elseif ($text == "سرور دوم 2️⃣" || $text == "بروزرسانی سرور 2 ♻️") {
+$server_2 = file_get_contents("https://kn7-prox47.herokuapp.com/proxy-tel/api_2.php");
     bot('sendmessage', [
         'chat_id' => $chat_id,
         'text' => "🔹 پروکسی های شما
@@ -182,6 +181,7 @@ $server_2
 }
 
 elseif ($text == "3️⃣ سرور سوم" || $text == "بروزرسانی سرور 3 ♻️") {
+$server_3 = file_get_contents("https://kn7-prox47.herokuapp.com/proxy-tel/api_3.php");
     bot('sendmessage', [
         'chat_id' => $chat_id,
         'text' => "🔹 پروکسی های شما
